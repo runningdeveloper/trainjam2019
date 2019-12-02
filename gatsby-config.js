@@ -4,6 +4,7 @@ module.exports = {
     title: `Wall ML Game`,
     description: `Train jam SA 2019 game.`,
     author: `@geoff4l`,
+    cachefix: '1'
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

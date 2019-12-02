@@ -52,10 +52,10 @@ const FaceThing = ({ results, loadingModel, loadingResult }) => {
       // loadingModel(true)
       // You can await here
       //   await changeFaceDetector('tiny_face_detector')
-      await faceapi.nets.ageGenderNet.loadFromUri("/")
-      await faceapi.nets.tinyFaceDetector.loadFromUri("/")
-      await faceapi.nets.faceLandmark68Net.loadFromUri("/")
-      await faceapi.nets.faceExpressionNet.loadFromUri("/")
+      await faceapi.nets.ageGenderNet.loadFromUri("https://runningdeveloper.github.io/trainjam2019/")
+      await faceapi.nets.tinyFaceDetector.loadFromUri("https://runningdeveloper.github.io/trainjam2019/")
+      await faceapi.nets.faceLandmark68Net.loadFromUri("https://runningdeveloper.github.io/trainjam2019/")
+      await faceapi.nets.faceExpressionNet.loadFromUri("https://runningdeveloper.github.io/trainjam2019/")
       //   setLoadedModel(true)
       dispatch(setLoading(null))
 

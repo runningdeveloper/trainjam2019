@@ -272,32 +272,31 @@ const GamePage = () => {
               alignItems: "center",
             }}
           >
-            <p
+            <div
               style={{
                 display: "flex",
                 alignItems: "center",
                 marginBottom: "2px",
               }}
             >
-              Happy + Female =
+              Happy + Female ={" "}
               <span style={{ marginLeft: "20px" }}>
                 <SimpleBlock colour="yellow" />
               </span>
-            </p>
-            <p
+            </div>
+            <div
               style={{
                 display: "flex",
                 alignItems: "center",
                 marginBottom: "2px",
               }}
             >
-              Happy + Male =
+              Happy + Male ={" "}
               <span style={{ marginLeft: "20px" }}>
-                {" "}
                 <SimpleBlock colour="red" />
               </span>
-            </p>
-            <p
+            </div>
+            <div
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -308,8 +307,8 @@ const GamePage = () => {
               <span style={{ marginLeft: "20px" }}>
                 <SimpleBlock colour="blue" />
               </span>
-            </p>
-            <p
+            </div>
+            <div
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -320,7 +319,7 @@ const GamePage = () => {
               <span style={{ marginLeft: "20px" }}>
                 <SimpleBlock colour="green" />
               </span>
-            </p>
+            </div>
             <FaceThing
               results={a => {
                 const temp = []
