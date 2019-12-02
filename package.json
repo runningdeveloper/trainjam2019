@@ -42,7 +42,7 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "gh-pages": "build-prefix && gh-pages -d public -b gh-pages",
+    "gh-pages": "npm run build-prefix && gh-pages -d public -b gh-pages",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "repository": {

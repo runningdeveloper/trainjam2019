@@ -257,7 +257,7 @@ const GamePage = () => {
                 Found People: {raw.length} <br />
                 {raw.map((a, i) => (
                   <span key={i}>
-                    {a.gender}, happy:{roundTo(a.expressions.happy, 3)}
+                    {a.gender}, happy:{roundTo(a.expressions.happy, 3)}<br/>
                   </span>
                 ))}
               </p>

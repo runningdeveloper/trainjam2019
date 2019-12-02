@@ -1,5 +1,5 @@
 module.exports = {
-  prefix: "/trainjam2019",
+  pathPrefix: "/trainjam2019",
   siteMetadata: {
     title: `Wall ML Game`,
     description: `Train jam SA 2019 game.`,

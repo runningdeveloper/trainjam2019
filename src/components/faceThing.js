@@ -66,6 +66,7 @@ const FaceThing = ({ results, loadingModel, loadingResult }) => {
 
   const capture = React.useCallback(async () => {
     const imageSrc = webcamRef.current.getScreenshot()
+    const testImage = '/5.jpg'
     setCaptured(imageSrc)
     // detect()
   }, [webcamRef])

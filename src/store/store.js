@@ -51,6 +51,7 @@ const gameSlice = createSlice({
       counter: 0,
       timer: 1000 * 30,
       blocksLine: null,
+      endScreen: null
     }),
     clearResultsMessage: (state, action) => ({
       ...state,
