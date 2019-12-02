@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react"
 import Webcam from "react-webcam";
 import { useSelector, useDispatch } from "react-redux"
 import {
-  setLoading
+  setLoading,
+  clearResultsMessage
 } from "../store/store"
 
 // const FaceThing = () => (
@@ -84,6 +85,7 @@ import {
           if(captured){
             // setLoadingPic(true)
             dispatch(setLoading('Loading Results...'))
+            dispatch(dispatch(clearResultsMessage()))
             // loadingResult(true)
             const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 512, scoreThreshold: 0.4 })
 
@@ -123,7 +125,9 @@ import {
       <>
         <Webcam
             id="video"
-            style={{position: 'absolute', bottom: 0, right: 0}}
+            // style={{position: 'absolute', bottom: 0, right: 0}}
+            style={{marginTop: '10px'}}
+
           audio={false}
           height={512}
           ref={webcamRef}
@@ -135,7 +139,7 @@ import {
         {/* {!loadedModel && <h1>Loading models...</h1>} */}
         {/* wtf lol */}
         {/* {loadingPic && <h1>Loading result...</h1>} */}
-        <button  style={{position: 'absolute', bottom: '10px', right: '10px'}} type="button" class="nes-btn is-primary" onClick={capture}>Build Row</button>
+        <button style={{marginTop: '-100px', zIndex: 1000}} type="button" class="nes-btn is-primary" onClick={capture}>Build Row</button>
 
       </>
     );

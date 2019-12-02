@@ -9,7 +9,8 @@ import {
 } from "@reduxjs/toolkit"
 import { blockSize } from "../components/utils"
 import * as faceapi from 'face-api.js';
-
+import countBy from 'lodash/countBy'
+import flatten from 'lodash/flatten'
 
 const dbInitalState = {
   width: 300,
@@ -22,7 +23,8 @@ const dbInitalState = {
 
   ],
   counter: 0,
-  timer: 1000*30
+  timer: 1000*30,
+  endScreen: null
 }
 
 const getColour = (gender, expressions) => {
@@ -50,18 +52,19 @@ const gameSlice = createSlice({
       start: (state, action) => ({
         ...state, wall: [], counter: 0, timer: 1000*30, blocksLine: null
       }),
-
+      clearResultsMessage: (state, action) => ({ ...state, resultMessage: null, raw: null }),
       startLine: (state, action) => {
+        // return { ...state, resultMessage: null, raw: null }
+
         // action.payload
         // console.log('action.payload', action.payload)
         if(action.payload.length === 0){
-            return { ...state, resultMessage: 'No result sorry' }
+            // clearResult()
+            return { ...state, resultMessage: 'No results sorry', raw: null }
         }
         let array =[]
         let lastIndex = 0
         for (let i = 0; i < 5; i++) {
-            console.log('action.payload[i]', action.payload[i])
-
             if(action.payload[i]){
                 array.push(action.payload[i])
                 lastIndex = i
@@ -70,19 +73,30 @@ const gameSlice = createSlice({
             }
         }
         const blocks = array.map((a, i)=>{
-            const x = (i*blockSize)+blockSize, y=0
+            const x = (i*blockSize)+(blockSize/2)+5, y=0
             const colour = getColour(a.gender, a.expressions)
             return {x, y, colour}
         })
-        console.log("blocks", blocks)
-        return { ...state, blocksLine: blocks.slice(0,5), resultMessage: null }
+        return { ...state, blocksLine: blocks.slice(0,5), resultMessage: null, raw: action.payload }
       },
       clearBlocksLine: (state, action) => ({ ...state, blocksLine: null, resultMessage: null }),
       moveBlocksDown: (state, action) => {
         const blocks = state.blocksLine.map(a=>{
-            return {...a, y: a.y+30}
+            return {...a, y: a.y+40}
         })
         return { ...state, blocksLine: blocks }
+      },
+
+      showEnd: (state, action) => {
+        const all = flatten(state.wall)
+        const colours = countBy(all, 'colour')
+        console.log('colours', colours)
+        // const count = state.
+        // const all = flatten(state.wall)
+        // console.log('greenCount', greenCount)
+        return { ...state, endScreen: {
+          ...colours
+        } }
       },
 
       
@@ -120,7 +134,7 @@ const gameSlice = createSlice({
     buildWall: (state, action) => {
         console.log('build wall')
         const wall = [...state.wall, state.blocksLine.map(a=>{
-          return {...a, y: state.height-(state.wall.length*blockSize)-blockSize/2}
+          return {...a, y: state.height-blockSize-(state.wall.length*blockSize)-(blockSize/2)-5}
         })]
         return { ...state, wall }
       },
@@ -137,7 +151,7 @@ export const moveLineDown = () => async (dispatch, getState) => {
     if(getState().game.blocksLine){
     const {wall, blocksLine, height} = getState().game
     let blocks 
-      if(blocksLine[0].y>height-(wall.length*blockSize)-blockSize){
+      if(blocksLine[0].y>height-blockSize-(wall.length*blockSize)-(blockSize)-5){
         dispatch(gameSlice.actions.buildWall())
         dispatch(gameSlice.actions.clearBlocksLine())
 
@@ -152,8 +166,18 @@ export const moveLineDown = () => async (dispatch, getState) => {
   export const end = () => async (dispatch, getState) => {
     if(getState().game.wall){
     const {wall, blocksLine, height} = getState().game
-      dispatch(gameSlice.actions.start())
+      // dispatch(gameSlice.actions.start())
+      dispatch(gameSlice.actions.showEnd())
+
     }
+    // console.log('getState().blocksLine', getState())
+  }
+
+  export const clearResult = () => async (dispatch, getState) => {
+    dispatch(gameSlice.actions.clearResultsMessage())
+    // setTimeout(()=>    dispatch(gameSlice.actions.clearResultsMessage()), 1000
+
+    // )
     // console.log('getState().blocksLine', getState())
   }
 
@@ -192,4 +216,4 @@ const createStore = () =>
 
 export default createStore
 
-export const { addBlock, setDimensions, firstCenterBlock, setRocket, setLoading, startLine, start} = gameSlice.actions
+export const { addBlock, setDimensions, firstCenterBlock, setRocket, setLoading, startLine, start, clearResultsMessage} = gameSlice.actions

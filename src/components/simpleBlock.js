@@ -10,10 +10,12 @@ const SimpleBlock = ({ x, y, colour, rotation }) => (
       backgroundColor: colour,
       width: `${blockSize}px`,
       height: `${blockSize}px`,
-      transform: `rotate(${rotation}deg)`
+      transform: `rotate(${rotation}deg)`,
+      border: '4px solid'
+
   }}
   >
-<span style={{lineHeight: `${blockSize}px`, fontSize: `${blockSize-blockSize/3}px`, flexDirection: 'row', display: 'flex', alignContent: 'center', justifyContent: 'center'}}>{colour?colour.charAt(0):""}</span>
+<span style={{lineHeight: `${blockSize}px`, fontSize: `${blockSize-4-blockSize/3}px`, flexDirection: 'row', display: 'flex', alignContent: 'center', justifyContent: 'center'}}>{colour?colour.charAt(0):""}</span>
     </div>
 )
 

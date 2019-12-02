@@ -16,8 +16,10 @@ import {
   startLine,
   moveLineDown,
   setLoading,
-  end
+  end,
+  clearResultsMessage
 } from "../store/store"
+import roundTo from 'round-to'
 import FaceThing from "../components/faceThing"
 import SimpleBlock from "../components/simpleBlock"
 const GamePage = () => {
@@ -38,6 +40,8 @@ const GamePage = () => {
     blocksLine,
     resultMessage,
     wall,
+    raw,
+    endScreen
   } = useSelector(state => state.game)
   const dispatch = useDispatch()
 
@@ -59,27 +63,22 @@ const GamePage = () => {
     // setW(window.innerWidth)
     // setH(window.innerHeight)
     dispatch(
-      setDimensions({ width: window.innerWidth, height: window.innerHeight })
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight < 400 ? window.innerHeight : 600,
+      })
     )
     // setStartX(window.innerWidth/2)
     // setStartY(window.innerHeight)
 
     dispatch(firstCenterBlock())
-
-    // dispatch(setRocket({x: width/2, y: height+blockSize+1, colour: 'green'}))
-
-    // dispatch(setRocket({x: width/2, y: height-blockSize, colour: 'green'}))
-
-    // dispatch(setRocket({x: width/2, y: (height/2)+100, colour: 'green'}))
-
-    // dispatch(setRocket({x: 0, y: 20, colour: 'green'}))
   }, [])
 
   useEffect(() => {
-    if(wall && wall.length === 6){
-        dispatch(end())
+    if (wall && wall.length === 6) {
+      dispatch(end())
     }
-  },[wall])
+  }, [wall])
 
   // useEffect(()=>{
   //   setInterval(() => {
@@ -110,119 +109,204 @@ const GamePage = () => {
       {/* {console.log('current centerBlocks', centerBlocks)} */}
 
       <SEO title="Game" />
-      {/* <h1>!</h1> */}
-      {loading && <h2>{loading}</h2>}
-      {resultMessage && <h2>{resultMessage}</h2>}
-      <button
-        style={{ marginTop: "10px" }}
-        type="button"
-        class="nes-btn is-primary"
-        onClick={() => dispatch(start())}
-      >
-        Restart
-      </button>
-      <button
-        style={{ marginTop: "10px" }}
-        type="button"
-        class="nes-btn is-primary"
-        onClick={() => {
-          if(!blocksLine){
-          const temp = [
-            { gender: "male", age: 10, expressions: [{ happy: 0.6 }] },
-          ]
-          dispatch(startLine(temp))
-        }
-        }}
-      >
-        test
-      </button>
-
-        <div>
-      <p style={{display:'flex', alignItems:'center'}}>Happy + Female = <SimpleBlock colour='yellow'/></p>
-      <p style={{display:'flex', alignItems:'center'}}>Happy + Male = <SimpleBlock colour='red'/></p>
-      <p style={{display:'flex', alignItems:'center'}}>Sad + Female = <SimpleBlock colour='blue'/></p>
-      <p style={{display:'flex', alignItems:'center'}}>Sad + Male = <SimpleBlock colour='green'/></p>
-      </div>
-
-{/* 
-      if(expressions.happy>0.5){
-        if(gender === 'male'){
-            return 'red'
-        }else{
-            return 'yellow'
-        }
-    }else{
-        if(gender === 'female'){
-            return 'blue'
-        }else{
-            return 'green'
-        }
-    } */}
-
-
-      {/* {rocket && <Block x={rocket.x} y={rocket.y} colour={rocket.colour}/>}
-    <div style={{position: 'absolute', transformOrigin:`${width/2}px ${(height/2)-blockSize/2}px`, transform: `rotate(${currentRotation}deg)`}}>
-    {centerBlocks.map((a)=> <Block key={`${a.x+a.y}`} x={a.x} y={a.y} colour={a.colour} rotation={0}/>)}
-    </div> */}
-
-      {blocksLine &&
-        blocksLine.map(a => (
-          <Block
-            key={`${a.x + a.y}`}
-            x={a.x}
-            y={a.y}
-            colour={a.colour}
-            rotation={0}
-          />
-        ))}
-
-      {console.log("wall", wall)}
-      {wall &&
-        wall.map(b =>
-          b.map(a => (
-            <Block
-              key={`${a.x + a.y}`}
-              x={a.x}
-              y={a.y}
-              colour={a.colour}
-              rotation={0}
-            />
-          ))
+      <>
+        {(loading || resultMessage) && (
+          <div
+            class="nes-container is-rounded"
+            style={{
+              zIndex: 10000,
+              backgroundColor: "white",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            {loading && <h2>{loading}</h2>}
+            {resultMessage && <div><h2>{resultMessage}</h2>     <button
+              type="button"
+              class="nes-btn is-primary"
+              onClick={() => dispatch(clearResultsMessage())}
+            >
+              Ok
+            </button></div>}
+          </div>
         )}
+                {endScreen && (
+          <div
+            class="nes-container is-rounded"
+            style={{
+              zIndex: 10000,
+              backgroundColor: "white",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+              <h3>Done, does your wall look cool? Is it colourful?</h3>
+              <p>Yellow Blocks: {endScreen.yellow?endScreen.yellow<6?`Only ${endScreen.yellow}`:endScreen.yellow:'Wow none bad!!'}</p>
+              <p>Red Blocks: {endScreen.red?endScreen.red<6?`Only ${endScreen.red}`:endScreen.red:'Wow none bad!!'}</p>
+              <p>Blue Blocks: {endScreen.blue?endScreen.blue<6?`Only ${endScreen.blue}`:endScreen.blue:'Wow none bad!!'}</p>
+              <p>Green Blocks: {endScreen.green?endScreen.green<6?`Only ${endScreen.green}`:endScreen.green:'Wow none bad!!'}</p>
+              <button
+              type="button"
+              class="nes-btn is-success"
+              onClick={() => dispatch(start())}
+            >
+              Try another
+            </button>
 
-      <FaceThing
-        results={a => {
-          const temp = []
-          a.forEach(a => {
-            temp.push({
-              gender: a.gender,
-              age: a.age,
-              expressions: a.expressions,
-            })
-            // dispatch(startLine({array:[
-            //   {gender: a.gender, }
-            // ]}))
-          })
-          if(!blocksLine){
-          dispatch(startLine(temp))
-          dispatch(setLoading(null))
+          </div>
+        )}
+        <section style={{ display: "flex", justifyContent: "space-around" }}>
+          {/* <h1>!</h1> */}
 
-          }else{
-            dispatch(setLoading('Wait for the wall to be built'))
-          }
-          console.log("inside the thing", a)
-        }}
-      />
+          <div style={{ marginTop: "10px" }}>
+            <button
+              type="button"
+              class="nes-btn is-success"
+              onClick={() => dispatch(start())}
+            >
+              Restart
+            </button>{" "}
+            <Link to={"/"} class="nes-btn is-warning">
+              Help
+            </Link>{" "}
+            <button
+              type="button"
+              class="nes-btn is-normal"
+              onClick={() => {
+                if (!blocksLine) {
+                  const temp = [
+                    { gender: "male", age: 10, expressions: { happy: 0.6111 } },
+                  ]
+                  dispatch(startLine(temp))
+                }
+              }}
+            >
+              test
+            </button>
+            {/* , width: `${20+(blockSize*5)}px`, height: `${(height-blockSize)}px`, marginLeft: `${blockSize-blockSize/2 -10}px` */}
+            <div
+              class="nes-container"
+              style={{
+                position: "absolute",
+                width: `${20 + blockSize * 5}px`,
+                height: `${height - blockSize}px`,
+                marginTop: "10px",
+              }}
+            >
+              {blocksLine &&
+                blocksLine.map(a => (
+                  <Block
+                    key={`${a.x + a.y}`}
+                    x={a.x}
+                    y={a.y}
+                    colour={a.colour}
+                    rotation={0}
+                  />
+                ))}
+              {wall &&
+                wall.map(b =>
+                  b.map(a => (
+                    <Block
+                      key={`${a.x + a.y}`}
+                      x={a.x}
+                      y={a.y}
+                      colour={a.colour}
+                      rotation={0}
+                    />
+                  ))
+                )}
+            </div>
+                  {raw && <p style={{marginTop: `${height-20}px`}}>Found People: {raw.length} <br/>{raw.map((a, i)=><span key={i} >{a.gender}, happy:{roundTo(a.expressions.happy,3)}</span>)}</p>}
 
-      {/* r gender, g age, b expression */}
+          </div>
+          <div
+            style={{
+              marginTop: "10px",
+              display: "flex",
+              flexDirection: "column",
+              alignContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <p
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "2px",
+              }}
+            >
+              Happy + Female =
+              <span style={{ marginLeft: "20px" }}>
+                <SimpleBlock colour="yellow" />
+              </span>
+            </p>
+            <p
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "2px",
+              }}
+            >
+              Happy + Male =
+              <span style={{ marginLeft: "20px" }}>
+                {" "}
+                <SimpleBlock colour="red" />
+              </span>
+            </p>
+            <p
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "2px",
+              }}
+            >
+              Sad + Female ={" "}
+              <span style={{ marginLeft: "20px" }}>
+                <SimpleBlock colour="blue" />
+              </span>
+            </p>
+            <p
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "2px",
+              }}
+            >
+              Sad + Male ={" "}
+              <span style={{ marginLeft: "20px" }}>
+                <SimpleBlock colour="green" />
+              </span>
+            </p>
+            <FaceThing
+              results={a => {
+                const temp = []
+                a.forEach(a => {
+                  temp.push({
+                    gender: a.gender,
+                    age: a.age,
+                    expressions: a.expressions,
+                  })
+                  // dispatch(startLine({array:[
+                  //   {gender: a.gender, }
+                  // ]}))
+                })
+                if (!blocksLine) {
+                  dispatch(startLine(temp))
+                  dispatch(setLoading(null))
+                } else {
+                  dispatch(setLoading("Wait for the wall to be built"))
+                }
+                console.log("inside the thing", a)
+              }}
+            />
+          </div>
 
-      {/* <Block x={startX} y={startY} colour='red'/>
-    <Block x={50} y={90} colour='green'/>
-    <Block x={0} y={0} colour='orange'/>
-    <Block x={0} y={0} colour='blue'/>
-
-    <Block x={w-40} y={h-40} colour='blue'/> */}
-      {/* <button onClick={()=>setStartY(startY+1)}>click</button> */}
+        </section>
+      </>
     </Layout>
   )
 }

@@ -23,7 +23,8 @@
     "react-helmet": "^5.2.1",
     "react-redux": "^7.1.3",
     "react-spring": "^9.0.0-beta.34",
-    "react-webcam": "^4.0.0"
+    "react-webcam": "^4.0.0",
+    "round-to": "^4.0.0"
   },
   "devDependencies": {
     "prettier": "^1.19.1"

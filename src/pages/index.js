@@ -68,7 +68,7 @@ const IndexPage = () => {
           <p>
             With machine learning in the browser. You want the wall to be cool,
             which means it should be random and colourful. Don't be "colour
-            blind" Get some friends.
+            blind" Get some people to help make 6 rows of bricks.
             I'll ask for webcam permission, not a <span class="nes-badge"> <span class="is-warning">government</span></span>
           </p>
         </div>
@@ -79,7 +79,7 @@ const IndexPage = () => {
             justifyContent: "center",
           }}
         >
-          <Link to={"/game/"} class="nes-btn is-primary" href="#">
+          <Link to={"/game/"} class="nes-btn is-primary">
             Game
           </Link>
         </div>
@@ -88,7 +88,7 @@ const IndexPage = () => {
             <i class="nes-icon twitter is-large" style={{transform: 'scale(4) translateY(25px)'}}></i>
 
             <div class="nes-balloon from-left">
-              <p>Sorry about graphics and etc..</p>
+              <p>Sorry about graphics, simplicity and etc..</p>
             </div>
           </section>
         </section>
