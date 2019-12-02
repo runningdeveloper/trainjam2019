@@ -17,9 +17,9 @@ import {
   moveLineDown,
   setLoading,
   end,
-  clearResultsMessage
+  clearResultsMessage,
 } from "../store/store"
-import roundTo from 'round-to'
+import roundTo from "round-to"
 import FaceThing from "../components/faceThing"
 import SimpleBlock from "../components/simpleBlock"
 const GamePage = () => {
@@ -41,7 +41,7 @@ const GamePage = () => {
     resultMessage,
     wall,
     raw,
-    endScreen
+    endScreen,
   } = useSelector(state => state.game)
   const dispatch = useDispatch()
 
@@ -123,16 +123,21 @@ const GamePage = () => {
             }}
           >
             {loading && <h2>{loading}</h2>}
-            {resultMessage && <div><h2>{resultMessage}</h2>     <button
-              type="button"
-              class="nes-btn is-primary"
-              onClick={() => dispatch(clearResultsMessage())}
-            >
-              Ok
-            </button></div>}
+            {resultMessage && (
+              <div>
+                <h2>{resultMessage}</h2>{" "}
+                <button
+                  type="button"
+                  class="nes-btn is-primary"
+                  onClick={() => dispatch(clearResultsMessage())}
+                >
+                  Ok
+                </button>
+              </div>
+            )}
           </div>
         )}
-                {endScreen && (
+        {endScreen && (
           <div
             class="nes-container is-rounded"
             style={{
@@ -144,19 +149,46 @@ const GamePage = () => {
               transform: "translate(-50%, -50%)",
             }}
           >
-              <h3>Done, does your wall look cool? Is it colourful?</h3>
-              <p>Yellow Blocks: {endScreen.yellow?endScreen.yellow<6?`Only ${endScreen.yellow}`:endScreen.yellow:'Wow none bad!!'}</p>
-              <p>Red Blocks: {endScreen.red?endScreen.red<6?`Only ${endScreen.red}`:endScreen.red:'Wow none bad!!'}</p>
-              <p>Blue Blocks: {endScreen.blue?endScreen.blue<6?`Only ${endScreen.blue}`:endScreen.blue:'Wow none bad!!'}</p>
-              <p>Green Blocks: {endScreen.green?endScreen.green<6?`Only ${endScreen.green}`:endScreen.green:'Wow none bad!!'}</p>
-              <button
+            <h3>Done, does your wall look cool? Is it colourful?</h3>
+            <p>
+              Yellow Blocks:{" "}
+              {endScreen.yellow
+                ? endScreen.yellow < 6
+                  ? `Only ${endScreen.yellow}`
+                  : endScreen.yellow
+                : "Wow none bad!!"}
+            </p>
+            <p>
+              Red Blocks:{" "}
+              {endScreen.red
+                ? endScreen.red < 6
+                  ? `Only ${endScreen.red}`
+                  : endScreen.red
+                : "Wow none bad!!"}
+            </p>
+            <p>
+              Blue Blocks:{" "}
+              {endScreen.blue
+                ? endScreen.blue < 6
+                  ? `Only ${endScreen.blue}`
+                  : endScreen.blue
+                : "Wow none bad!!"}
+            </p>
+            <p>
+              Green Blocks:{" "}
+              {endScreen.green
+                ? endScreen.green < 6
+                  ? `Only ${endScreen.green}`
+                  : endScreen.green
+                : "Wow none bad!!"}
+            </p>
+            <button
               type="button"
               class="nes-btn is-success"
               onClick={() => dispatch(start())}
             >
               Try another
             </button>
-
           </div>
         )}
         <section style={{ display: "flex", justifyContent: "space-around" }}>
@@ -220,8 +252,16 @@ const GamePage = () => {
                   ))
                 )}
             </div>
-                  {raw && <p style={{marginTop: `${height-20}px`}}>Found People: {raw.length} <br/>{raw.map((a, i)=><span key={i} >{a.gender}, happy:{roundTo(a.expressions.happy,3)}</span>)}</p>}
-
+            {raw && (
+              <p style={{ marginTop: `${height - 20}px` }}>
+                Found People: {raw.length} <br />
+                {raw.map((a, i) => (
+                  <span key={i}>
+                    {a.gender}, happy:{roundTo(a.expressions.happy, 3)}
+                  </span>
+                ))}
+              </p>
+            )}
           </div>
           <div
             style={{
@@ -304,7 +344,6 @@ const GamePage = () => {
               }}
             />
           </div>
-
         </section>
       </>
     </Layout>

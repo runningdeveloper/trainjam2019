@@ -27,6 +27,7 @@
     "round-to": "^4.0.0"
   },
   "devDependencies": {
+    "gh-pages": "^2.1.1",
     "prettier": "^1.19.1"
   },
   "keywords": [
@@ -36,10 +37,12 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
+    "build-prefix": "gatsby build --prefix-paths",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
+    "gh-pages": "build-prefix && gh-pages -d public -b gh-pages",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "repository": {

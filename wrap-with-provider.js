@@ -29,9 +29,5 @@ export default ({ element }) => {
   //  - there is fresh store for each SSR page
   //  - it will be called only once in browser, when React mounts
   const store = createStore()
-  return (
-    <Provider store={store}>
-      {element}
-    </Provider>
-  )
+  return <Provider store={store}>{element}</Provider>
 }

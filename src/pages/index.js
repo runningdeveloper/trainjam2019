@@ -19,6 +19,7 @@ import {
 } from "../store/store"
 import FaceThing from "../components/faceThing"
 import SimpleBlock from "../components/simpleBlock"
+import { navigate } from "@reach/router"
 const IndexPage = () => {
   // const [w, setW] = useState(300)
   const [currentRotation, setCurrentRotation] = useState(0)
@@ -50,7 +51,7 @@ const IndexPage = () => {
       {/* {console.log('current centerBlocks', centerBlocks)} */}
 
       <SEO title="Home" />
-      
+
       <div style={{ marginTop: "50px" }}>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <SimpleBlock colour="red" />
@@ -67,9 +68,14 @@ const IndexPage = () => {
         <div style={{ marginTop: "20px" }} class="nes-container is-rounded">
           <p>
             With machine learning in the browser. You want the wall to be cool,
-            which means it should be random and colourful. Don't be "colour
-            blind" Get some people to help make 6 rows of bricks.
-            I'll ask for webcam permission, not a <span class="nes-badge"> <span class="is-warning">government</span></span>
+            which means it should be random and colourful. Don't say you can't
+            see colour like some our leaders want you to belive. Get some people
+            with different qualities to help make 6 rows of bricks to make your
+            wall. I'll ask for webcam permission, not a{" "}
+            <span class="nes-badge">
+              {" "}
+              <span class="is-warning">government</span>
+            </span>
           </p>
         </div>
         <div
@@ -83,9 +89,13 @@ const IndexPage = () => {
             Game
           </Link>
         </div>
-        <section class="message-list" style={{marginTop: '100px'}}>
+        <section class="message-list" style={{ marginTop: "100px" }}>
           <section class="message -left">
-            <i class="nes-icon twitter is-large" style={{transform: 'scale(4) translateY(25px)'}}></i>
+            <i
+              class="nes-icon twitter is-large"
+              onClick={() => navigate("https://twitter.com/geoff4l")}
+              style={{ transform: "scale(4) translateY(25px)" }}
+            ></i>
 
             <div class="nes-balloon from-left">
               <p>Sorry about graphics, simplicity and etc..</p>

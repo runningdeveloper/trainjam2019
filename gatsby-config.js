@@ -1,4 +1,5 @@
 module.exports = {
+  prefix: "/trainjam2019",
   siteMetadata: {
     title: `Wall ML Game`,
     description: `Train jam SA 2019 game.`,
@@ -30,12 +31,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
-        fonts: [
-          `Press Start 2P`,
-        ],
-        display: 'swap'
-      }
-    }
+        fonts: [`Press Start 2P`],
+        display: "swap",
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
