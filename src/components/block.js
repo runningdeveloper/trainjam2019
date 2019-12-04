@@ -1,5 +1,3 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
 import React from "react"
 import { blockSize } from "./utils"
 
@@ -27,7 +25,7 @@ const Block = ({ x, y, colour, rotation }) => (
         justifyContent: "center",
       }}
     >
-      {colour ? colour.charAt(0) : ""}
+      {colour ? (colour === "gray" ? "" : colour.charAt(0)) : ""}
     </span>
   </div>
 )

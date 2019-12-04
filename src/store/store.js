@@ -23,9 +23,13 @@ const dbInitalState = {
   counter: 0,
   timer: 1000 * 30,
   endScreen: null,
+  resultMessage: 'Put some faces in the camera and hit "Build Row"',
 }
 
 const getColour = (gender, expressions) => {
+  if (gender === "none") {
+    return "gray"
+  }
   if (expressions.happy > 0.5) {
     if (gender === "male") {
       return "red"
@@ -51,7 +55,9 @@ const gameSlice = createSlice({
       counter: 0,
       timer: 1000 * 30,
       blocksLine: null,
-      endScreen: null
+      endScreen: null,
+      raw: null,
+      resultMessage: null,
     }),
     clearResultsMessage: (state, action) => ({
       ...state,
@@ -75,8 +81,8 @@ const gameSlice = createSlice({
           lastIndex = i
         } else {
           array.push({
-            gender: action.payload[lastIndex].gender,
-            expressions: action.payload[lastIndex].expressions,
+            gender: "none",
+            expressions: "none",
           })
         }
       }

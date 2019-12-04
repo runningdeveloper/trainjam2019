@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import Webcam from "react-webcam"
 import { useSelector, useDispatch } from "react-redux"
 import { setLoading, clearResultsMessage } from "../store/store"
-
+import { withPrefix } from "gatsby"
 // const FaceThing = () => (
 //     <div
 //     style={{
@@ -52,10 +52,10 @@ const FaceThing = ({ results, loadingModel, loadingResult }) => {
       // loadingModel(true)
       // You can await here
       //   await changeFaceDetector('tiny_face_detector')
-      await faceapi.nets.ageGenderNet.loadFromUri("https://runningdeveloper.github.io/trainjam2019/")
-      await faceapi.nets.tinyFaceDetector.loadFromUri("https://runningdeveloper.github.io/trainjam2019/")
-      await faceapi.nets.faceLandmark68Net.loadFromUri("https://runningdeveloper.github.io/trainjam2019/")
-      await faceapi.nets.faceExpressionNet.loadFromUri("https://runningdeveloper.github.io/trainjam2019/")
+      await faceapi.nets.ageGenderNet.loadFromUri(withPrefix("/"))
+      await faceapi.nets.tinyFaceDetector.loadFromUri(withPrefix("/"))
+      await faceapi.nets.faceLandmark68Net.loadFromUri(withPrefix("/"))
+      await faceapi.nets.faceExpressionNet.loadFromUri(withPrefix("/"))
       //   setLoadedModel(true)
       dispatch(setLoading(null))
 
@@ -66,7 +66,7 @@ const FaceThing = ({ results, loadingModel, loadingResult }) => {
 
   const capture = React.useCallback(async () => {
     const imageSrc = webcamRef.current.getScreenshot()
-    const testImage = '/5.jpg'
+    const testImage = "/5.jpg"
     setCaptured(imageSrc)
     // detect()
   }, [webcamRef])
@@ -80,7 +80,7 @@ const FaceThing = ({ results, loadingModel, loadingResult }) => {
         // loadingResult(true)
         const options = new faceapi.TinyFaceDetectorOptions({
           inputSize: 512,
-          scoreThreshold: 0.4,
+          scoreThreshold: 0.3,
         })
 
         const imgResults = await faceapi

@@ -68,13 +68,20 @@ const IndexPage = () => {
         <div style={{ marginTop: "20px" }} class="nes-container is-rounded">
           <p>
             With machine learning in the browser. You want the wall to be cool,
-            which means it should be random and colourful. Don't say you can't
-            see colour like some our leaders want you to belive. Get some people
-            with different qualities to help make 6 rows of bricks to make your
-            wall. I'll ask for webcam permission, not a{" "}
+            which means it should be random and colourful. Get some people with
+            different qualities to help make up 6 rows of bricks to make your
+            wall. I'll ask for webcam permission, the video is not stored or
+            sent anywhere I’m not a scary
+            <br />
             <span class="nes-badge">
               {" "}
               <span class="is-warning">government</span>
+            </span>
+            <br />
+            or big tech{" "}
+            <span class="nes-badge">
+              {" "}
+              <span class="is-warning">company</span>
             </span>
           </p>
         </div>
@@ -89,18 +96,28 @@ const IndexPage = () => {
             Game
           </Link>
         </div>
-        <section class="message-list" style={{ marginTop: "100px" }}>
+        <section class="message-list" style={{ marginTop: "60px" }}>
           <section class="message -left">
-            <i
-              class="nes-icon twitter is-large"
-              onClick={() => navigate("https://twitter.com/geoff4l")}
-              style={{ transform: "scale(4) translateY(25px)" }}
-            ></i>
-
             <div class="nes-balloon from-left">
               <p>Sorry about graphics, simplicity and etc..</p>
             </div>
           </section>
+        </section>
+        <section>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://twitter.com/geoff4l"
+          >
+            <i class="nes-icon twitter is-large"></i>
+          </a>{" "}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/runningdeveloper/trainjam2019"
+          >
+            <i class="nes-octocat animate is-large"></i>
+          </a>
         </section>
       </div>
 

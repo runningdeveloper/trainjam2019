@@ -211,6 +211,11 @@ const GamePage = () => {
               onClick={() => {
                 if (!blocksLine) {
                   const temp = [
+                    {
+                      gender: "female",
+                      age: 10,
+                      expressions: { happy: 0.6111 },
+                    },
                     { gender: "male", age: 10, expressions: { happy: 0.6111 } },
                   ]
                   dispatch(startLine(temp))
@@ -257,7 +262,8 @@ const GamePage = () => {
                 Found People: {raw.length} <br />
                 {raw.map((a, i) => (
                   <span key={i}>
-                    {a.gender}, happy:{roundTo(a.expressions.happy, 3)}<br/>
+                    {a.gender}, happy:{roundTo(a.expressions.happy * 100, 1)}%
+                    <br />
                   </span>
                 ))}
               </p>
